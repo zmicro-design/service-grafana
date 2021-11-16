@@ -1,0 +1,67 @@
+# Permission Question
+#   [Solved] https://community.grafana.com/t/solved-grafana-permission-denied-with-docker-on-centos7/12957
+#   [How] chown -R 472:472 ./{config,data}
+#
+#   [Better Solution]
+#   基本信息：
+#     $id
+#     > uid=472(grafana) gid=0(root) groups=0(root)
+#     $ ls -al /etc/ | grep grafana
+#     > drwxr-xr-x    3 root     root          4096 Apr 14 09:47 grafana
+#     $ ls -al /var/lib | grep grafana
+#     > drwxrwxrwx    1 grafana  root          4096 Jun  6 01:21 grafana
+#
+#   解释说明：
+#     根据上面信息，容器内 grafana 用户 ID 为 472，并且加入了 root 组  
+#     所以操作权限只要以下 2 选 1 即可:
+#       1. 所有者是 472 并且可读写
+#       2. 所有组是 root 并且可读写
+#     那么我们看到
+#       1. /etc/grafana 这个文件夹，root 组只能读不能写（r-x），也就是 grafana 用户权限问题了
+#       2. /var/lib/grafana 这个文件夹，root 组可读写执行（rwx），也就是 grafana 没有权限问题
+#     很明显，问题出在 /etc/grafana，所以只要修复它就行啦
+#       修复思路，让 root 组可读写执行
+#       优雅修复命令：(在主机目录下) sudo chmod g+rwx ./config
+#       粗暴但有效修复命令：让 other 组也可以读写执行：sudo chmod -R o+rwx ./data
+#         其实就是网上类似 chmod 777 的写法，相比之下，原理更了解
+#
+#   其他思路：使用 Host 的 UID 和  GID
+#
+version: '3.7'
+
+services:
+  grafana:
+    restart: always
+    image: grafana/grafana:${SERVICE_GRAFANA_NAME}
+    ports:
+     - ${SERVICE_GRAFANA_HOST}:${SERVICE_GRAFANA_PORT}:3000
+    # @TODO USR: >= 7.3 grafana 472 root 0
+    # https://grafana.com/docs/grafana/latest/installation/docker/
+    # user: "1000:1000"
+    environment:
+      GF_AUTH_GENERIC_OAUTH_ENABLED: 'true'
+      GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: 'true'
+      # URL
+      # GF_SERVER_ROOT_URL: https://YOUR_DOMAIN
+      #
+      # Doreamin OAuth2
+      # GF_AUTH_GENERIC_OAUTH_NAME: Doreamon
+      # GF_AUTH_GENERIC_OAUTH_SCOPES: openid profile email
+      # GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://login.zcorky.com/authorize
+      # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://login.zcorky.com/token
+      # GF_AUTH_GENERIC_OAUTH_API_URL: https://login.zcorky.com/api/user
+      # GF_AUTH_GENERIC_OAUTH_CLIENT_ID: $CLIENT_ID
+      # GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: $CLIENT_SECRET
+      # GF_AUTH_GENERIC_OAUTH_ID_TOKEN_ATTRIBUTE_NAME: access_token
+      # GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: email
+      # GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH: email
+      # GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH: nickname
+
+    volumes:
+      - ${SERVICE_CONFIGS}/etc:/etc/grafana
+      - ${SERVICE_DATA}/lib:/var/lib/grafana
+
+networks:
+  default:
+    external: true
+    name: compose-ingress
