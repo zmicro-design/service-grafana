@@ -33,14 +33,16 @@ services:
   grafana:
     restart: always
     image: grafana/grafana:${SERVICE_GRAFANA_VERSION}
-    ports:
-     - ${SERVICE_GRAFANA_HOST}:${SERVICE_GRAFANA_PORT}:3000
+    # ports:
+    #  - ${SERVICE_GRAFANA_HOST}:${SERVICE_GRAFANA_PORT}:3000
     # @TODO USR: >= 7.3 grafana 472 root 0
     # https://grafana.com/docs/grafana/latest/installation/docker/
     # user: "1000:1000"
     environment:
       GF_AUTH_GENERIC_OAUTH_ENABLED: 'true'
       GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: 'true'
+    env_file:
+      - $SERVICE_CONFIG
       # URL
       # GF_SERVER_ROOT_URL: https://YOUR_DOMAIN
       #

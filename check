@@ -5,22 +5,22 @@ load inquirer
 check() {
   config::load_file $SERVICE_GRAFANA_CONFIG
 
-  if [ -z "$SERVICE_GRAFANA_HOST" ]; then
-    inquirer::text "请输入 SERVICE_GRAFANA_HOST:" value
-    config::set SERVICE_GRAFANA_HOST $value $SERVICE_GRAFANA_CONFIG
-  fi
+  # if [ -z "$SERVICE_GRAFANA_HOST" ]; then
+  #   inquirer::text "请输入 SERVICE_GRAFANA_HOST:" value
+  #   config::set SERVICE_GRAFANA_HOST $value $SERVICE_GRAFANA_CONFIG
+  # fi
 
-  if [ -z "$SERVICE_GRAFANA_PORT" ]; then
-    inquirer::text "请输入 SERVICE_GRAFANA_PORT:" value
-    config::set SERVICE_GRAFANA_PORT $value $SERVICE_GRAFANA_CONFIG
-  fi
+  # if [ -z "$SERVICE_GRAFANA_PORT" ]; then
+  #   inquirer::text "请输入 SERVICE_GRAFANA_PORT:" value
+  #   config::set SERVICE_GRAFANA_PORT $value $SERVICE_GRAFANA_CONFIG
+  # fi
 
   # @TODO load again
-  config::load_file $SERVICE_GRAFANA_CONFIG
+  # config::load_file $SERVICE_GRAFANA_CONFIG
 
   # @TODO
-  export SERVICE_GRAFANA_HOST=$SERVICE_GRAFANA_HOST
-  export SERVICE_GRAFANA_PORT=$SERVICE_GRAFANA_PORT
+  # export SERVICE_GRAFANA_HOST=$SERVICE_GRAFANA_HOST
+  # export SERVICE_GRAFANA_PORT=$SERVICE_GRAFANA_PORT
 }
 
 check $@
