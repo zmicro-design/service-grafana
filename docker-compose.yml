@@ -58,10 +58,11 @@ services:
       # GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: email
       # GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH: email
       # GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH: nickname
-
     volumes:
       - ${SERVICE_CONFIGS}/etc:/etc/grafana
       - ${SERVICE_DATA}/lib:/var/lib/grafana
+    mem_limit: 4096m
+    cpus: 2
 
 networks:
   default:
