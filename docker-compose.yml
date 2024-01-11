@@ -41,23 +41,23 @@ services:
     environment:
       GF_AUTH_GENERIC_OAUTH_ENABLED: 'true'
       GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: 'true'
-    env_file:
-      - $SERVICE_CONFIG
       # URL
-      # GF_SERVER_ROOT_URL: https://YOUR_DOMAIN
+      GF_SERVER_ROOT_URL: ${SERVICE_GRAFANA_ROOT_URL}
       #
       # Doreamin OAuth2
-      # GF_AUTH_GENERIC_OAUTH_NAME: Doreamon
-      # GF_AUTH_GENERIC_OAUTH_SCOPES: openid profile email
-      # GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://login.zcorky.com/authorize
-      # GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://login.zcorky.com/token
-      # GF_AUTH_GENERIC_OAUTH_API_URL: https://login.zcorky.com/api/user
-      # GF_AUTH_GENERIC_OAUTH_CLIENT_ID: $CLIENT_ID
-      # GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: $CLIENT_SECRET
-      # GF_AUTH_GENERIC_OAUTH_ID_TOKEN_ATTRIBUTE_NAME: access_token
-      # GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: email
-      # GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH: email
-      # GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH: nickname
+      GF_AUTH_GENERIC_OAUTH_NAME: Doreamon
+      GF_AUTH_GENERIC_OAUTH_SCOPES: openid profile email
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://login.zcorky.com/authorize
+      GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://login.zcorky.com/token
+      GF_AUTH_GENERIC_OAUTH_API_URL: https://login.zcorky.com/api/user
+      GF_AUTH_GENERIC_OAUTH_CLIENT_ID: $SERVICE_GRAFANA_DOREAMON_CLIENT_ID
+      GF_AUTH_GENERIC_OAUTH_CLIENT_SECRET: $SERVICE_GRAFANA_DOREAMON_CLIENT_SECRET
+      GF_AUTH_GENERIC_OAUTH_ID_TOKEN_ATTRIBUTE_NAME: access_token
+      GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: email
+      GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH: email
+      GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH: nickname
+    # env_file:
+    #   - $SERVICE_CONFIG
     volumes:
       - ${SERVICE_CONFIGS}/config.ini:/etc/grafana/grafana.ini
       - ${SERVICE_DATA}/lib:/var/lib/grafana
