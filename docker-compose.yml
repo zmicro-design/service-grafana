@@ -47,7 +47,7 @@ services:
       # Doreamin OAuth2
       GF_AUTH_GENERIC_OAUTH_NAME: 哆啦A梦
       GF_AUTH_GENERIC_OAUTH_SCOPES: openid profile email
-      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://login.zcorky.com/authorize
+      GF_AUTH_GENERIC_OAUTH_AUTH_URL: https://login.zcorky.com/v2/authorize
       GF_AUTH_GENERIC_OAUTH_TOKEN_URL: https://login.zcorky.com/token
       GF_AUTH_GENERIC_OAUTH_API_URL: https://login.zcorky.com/api/user
       GF_AUTH_GENERIC_OAUTH_CLIENT_ID: $SERVICE_GRAFANA_DOREAMON_CLIENT_ID
