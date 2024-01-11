@@ -1,3 +1,3 @@
 NAME=grafana
-VERSION=v1.2.0
+VERSION=v1.2.1
 DESCRIPTION="Grafana Service"
