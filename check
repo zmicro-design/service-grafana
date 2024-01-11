@@ -12,7 +12,7 @@ check() {
     cp ${SERVICE_DIR}/conf/config.ini ${SERVICE_CONFIGS}/config.ini
   fi
 
-  service::config_set SERVICE_GRAFANA_ROOT_URL text "Root URL"
+  service::config_set SERVICE_GRAFANA_ROOT_URL text "ROOT URL"
 
   # service::config_set SERVICE_QDRANT_PORT text "Port" 8024
   service::config_set SERVICE_GRAFANA_DOREAMON_CLIENT_ID text "Doreamon Client ID"
@@ -20,4 +20,3 @@ check() {
 }
 
 check $@
-""
