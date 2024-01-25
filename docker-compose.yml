@@ -41,6 +41,7 @@ services:
     environment:
       GF_AUTH_GENERIC_OAUTH_ENABLED: 'true'
       GF_AUTH_GENERIC_OAUTH_ALLOW_SIGN_UP: 'true'
+      GF_AUTH_GENERIC_OAUTH_ALLOW_ASSIGN_GRAFANA_ADMIN: 'true'
       # URL
       GF_SERVER_ROOT_URL: ${SERVICE_GRAFANA_ROOT_URL}
       #
@@ -56,6 +57,13 @@ services:
       GF_AUTH_GENERIC_OAUTH_EMAIL_ATTRIBUTE_NAME: email
       GF_AUTH_GENERIC_OAUTH_LOGIN_ATTRIBUTE_PATH: email
       GF_AUTH_GENERIC_OAUTH_NAME_ATTRIBUTE_PATH: nickname
+      #
+      GF_AUTH_ANONYMOUS_ENABLED: 'true'
+      GF_AUTH_ANONYMOUS_ORG_ROLE: Viewer
+      GF_AUTH_ANONYMOUS_ORG_NAME: public
+      #
+      GF_AUTH_BASIC_ENABLED: 'false'
+
     # env_file:
     #   - $SERVICE_CONFIG
     volumes:
